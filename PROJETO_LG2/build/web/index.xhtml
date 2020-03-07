@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="template.xhtml"
+             xmlns:p="http://primefaces.org/ui"
+                 
+             xmlns:sccomp="http://xmlns.jcp.org/jsf/composite/sccomp">
+    
+        <h2>Bem vindo ao Sistema de Anotações.</h2>
+
+        <spam>Neste sistema você poderá armazenar, editar, deletar e ver todas as suas anotações.</spam>
+        
+        <hr></hr>
+        
+        
+        <h:form>
+     <p:messages autoUpdate="true" showDetail="true"></p:messages>
+     <p:fieldset legend="Notas">
+            
+            <sccomp:toolbarCrud crudBean="#{notaBean}"></sccomp:toolbarCrud>
+            
+            <p:panelGrid columns="2" rendered="#{notaBean.busca == false}">
+
+                <h:outputLabel value="Nome da Nota"></h:outputLabel>
+                <p:inputText value="#{notaBean.entidade.nomeN}"></p:inputText>
+                
+                <h:outputLabel value="Conteúdo"></h:outputLabel>
+                <p:inputText value="#{notaBean.entidade.conteudo}"></p:inputText>
+                
+                <h:outputLabel value="Data de Criação"></h:outputLabel>
+                <p:calendar value="#{notaBean.entidade.data}"></p:calendar>
+                
+                
+
+                <h:outputLabel value="ID Caderno"></h:outputLabel>
+                <p:inputText value="#{notaBean.entidade.codigoC}"></p:inputText>
+
+                
+                
+                
+                
+                
+   
+            </p:panelGrid>
+            
+            
+
+        </p:fieldset>
+     
+     <p:fieldset legend="Cadernos" rendered="#{notaBean.busca==false}">
+         <p:dataTable value="#{cadernoBean.entidades}" var="caderno" rendered="#{notaBean.busca == false}">
+            
+         <br></br>
+            cadernoBean.buscar();
+
+                    
+                <p:column headerText="Caderno" sortBy="#{caderno.nomeC}">
+                    <h:outputText value="#{caderno.nomeC}" ></h:outputText>
+                </p:column>
+         
+                <p:column headerText="ID" sortBy="#{caderno.codigoC}">
+                    <h:outputText value="#{caderno.codigoC}"></h:outputText>
+                </p:column>
+
+            </p:dataTable>
+     </p:fieldset>
+     
+     <p:dataTable  value="#{notaBean.entidades}" var="nota" rendered="#{notaBean.busca == true}">
+                
+                <p:column>
+                    <p:commandButton value="Editar" action="#{notaBean.editar(nota)}" update="@form"></p:commandButton>
+                    <p:commandButton value="Deletar" action="#{notaBean.deletar(nota)}" update="@form"></p:commandButton>
+                </p:column>
+
+                <p:column headerText="Nome da Nota" sortBy="#{nota.nomeN}">
+                    <h:outputText value="#{nota.nomeN}" ></h:outputText>
+                </p:column>
+         
+                <p:column headerText="Conteúdo" sortBy="#{nota.conteudo}">
+                    <h:outputText value="#{nota.conteudo}" ></h:outputText>
+                </p:column>
+         
+                <p:column headerText="Data" sortBy="#{nota.data}">
+                    <h:outputText value="#{nota.data}" ></h:outputText>
+                </p:column>
+
+            </p:dataTable>    
+     
+     
+     
+    </h:form>
+        
+        
+        
+        
+   
+</ui:decorate>
+
